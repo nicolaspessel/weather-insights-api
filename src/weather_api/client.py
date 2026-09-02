@@ -14,7 +14,11 @@ def fetch_forecast(latitude: float, longitude: float) -> dict:
         "forecast_days": 1,
     }
 
-    response = requests.get(url=BASE_URL, params=params)
+    response = requests.get(
+        url=BASE_URL, 
+        params=params,
+        timeout=10.0
+    )
 
     response.raise_for_status()
 

@@ -8,9 +8,16 @@ summaries through our own HTTP API.
 
 ## Data flow
 
-User → Our API → Open-Meteo Client → Open-Meteo → API → Weather Service → Transformed response
+User → API Endpoint → Open-Meteo Client → Open-Meteo → Weather Service → JSON transformed response
 
 ## Modules
+
+### main.py
+
+Responsible for expose the internal API endpoints and handle HTTP 
+layer operations.
+
+It should not know how the HTTP requests to Open-Meteo are made.
 
 ### client.py
 

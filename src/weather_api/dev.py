@@ -1,10 +1,9 @@
 from pprint import pprint
 from client import fetch_forecast
+from service import summarize_forecast
 
-data = fetch_forecast(latitude=52, longitude=13)
+forecast = fetch_forecast(latitude=52, longitude=13)
 
-print("== RESPOSTA FULL ==")
-pprint(data)
+summary = summarize_forecast(forecast)
 
-print("\n == HOURLY ==")
-pprint(data["hourly"])
+pprint(summary)

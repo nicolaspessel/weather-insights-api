@@ -1,6 +1,11 @@
 import requests
 
+
 BASE_URL = "https://api.open-meteo.com/v1/forecast"
+
+class WeatherProviderError(Exception):
+    pass
+
 
 def fetch_forecast(latitude: float, longitude: float) -> dict:
     params = {
@@ -14,12 +19,18 @@ def fetch_forecast(latitude: float, longitude: float) -> dict:
         "forecast_days": 1,
     }
 
-    response = requests.get(
-        url=BASE_URL, 
-        params=params,
-        timeout=10.0
-    )
+    try:
+        response = requests.get(
+            BASE_URL, 
+            params=params,
+            timeout=10.0
+        )
 
-    response.raise_for_status()
+        response.raise_for_status()
 
-    return response.json()
+        return response.json()
+
+    except requests.RequestException as re:
+        raise WeatherProviderError(
+            "Could not retrieve weather data from Open-Meteo."
+        ) from re

@@ -1,0 +1,11 @@
+Metadata-Version: 2.4
+Name: weather-insights-api
+Version: 0.4.0
+Summary: API that transforms weather data from Open-Meteo.
+Requires-Python: >=3.12
+Requires-Dist: fastapi
+Requires-Dist: httpx2>=2.12.0
+Requires-Dist: pytest>=9.1.1
+Provides-Extra: dev
+Requires-Dist: pytest; extra == "dev"
+Requires-Dist: httpx; extra == "dev"

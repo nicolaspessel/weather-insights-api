@@ -1,7 +1,7 @@
 import requests
 
-
-BASE_URL = "https://api.open-meteo.com/v1/forecast"
+FORECAST_URL = "https://api.open-meteo.com/v1/forecast"
+GEOCODING_URL = "https://geocoding-api.open-meteo.com/v1/search"
 
 class WeatherProviderError(Exception):
     pass
@@ -21,7 +21,7 @@ def fetch_forecast(latitude: float, longitude: float) -> dict:
 
     try:
         response = requests.get(
-            BASE_URL, 
+            FORECAST_URL, 
             params=params,
             timeout=10.0
         )
@@ -33,4 +33,27 @@ def fetch_forecast(latitude: float, longitude: float) -> dict:
     except requests.RequestException as re:
         raise WeatherProviderError(
             "Could not retrieve weather data from Open-Meteo."
+        ) from re
+
+
+def fetch_geocoding(name: str, language: str):
+    params = {
+        "name": name, 
+        "language": language
+    }
+
+    try:
+        response = requests.get(
+            GEOCODING_URL,
+            params=params,
+            timeout=10.0
+        )
+
+        response.raise_for_status()
+
+        return response.json()
+
+    except requests.RequestException as re:
+        raise WeatherProviderError(
+            "Could not retrieve geocoding data from Open-Meteo."
         ) from re

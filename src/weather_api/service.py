@@ -20,19 +20,16 @@ def summarize_forecast(data: dict) -> dict:
     }
 
 
-def retrieve_latitude_longitude_from_geocoding(data: dict) -> dict:
+def retrieve_coordinates(data: dict) -> tuple:
     '''
-    Searches for the latitude and longitude within a geocoding response.
+    Retrieves latitude and longitude from a geocoding dictionary.
     '''
 
     geo_params = data["results"][0]
 
-    latitude = geo_params.get("latitude")
-    longitude = geo_params.get("longitude")
-
     return (
-        latitude, 
-        longitude
+        geo_params["latitude"],
+        geo_params["longitude"],
     )
 
 
@@ -43,18 +40,10 @@ def parse_location(data: dict) -> dict:
 
     geo_params = data["results"][0]
 
-    id = geo_params.get("id")
-    name = geo_params.get("name")
-    country = geo_params.get("country")
-    latitude = geo_params.get("latitude")
-    longitude = geo_params.get("longitude")
-    timezone = geo_params.get("timezone")
-
     return {
-        "id": id,
-        "name": name,
-        "country": country,
-        "latitude": latitude,
-        "longitude": longitude,
-        "timezone": timezone
+        "name": geo_params["name"],
+        "country": geo_params["country"],
+        "latitude": geo_params["latitude"],
+        "longitude": geo_params["longitude"],
+        "timezone": geo_params["timezone"], 
     }

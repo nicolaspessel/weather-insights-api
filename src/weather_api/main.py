@@ -8,7 +8,7 @@ from .client import (
 from .service import (
     summarize_forecast,
     parse_location,
-    retrieve_latitude_longitude_from_geocoding,
+    retrieve_coordinates,
 )
 
 app = FastAPI()
@@ -26,11 +26,12 @@ def get_forecast(latitude: float, longitude: float) -> dict:
             detail="Could not retrieve weather data.",
         )
 
+
 @app.get("/forecast/location")
 def get_forecast(name: str, language: str) -> dict:
     try:
-        geocoding = parse_location(name, language)
-        latitude, longitude = retrieve_latitude_longitude_from_geocoding(geocoding)
+        geocoding = fetch_geocoding(name, language)
+        latitude, longitude = retrieve_coordinates(geocoding)
 
         forecast = fetch_forecast(latitude, longitude)
 
@@ -41,6 +42,7 @@ def get_forecast(name: str, language: str) -> dict:
             status_code=502,
             detail="Could not retrieve weather data.",
         )
+
 
 @app.get("/geocoding")
 def get_geocoding(name: str, language: str) -> dict:

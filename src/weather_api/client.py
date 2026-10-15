@@ -1,5 +1,7 @@
 import requests
 
+from .models.schemas import ForecastOptions
+
 FORECAST_URL = "https://api.open-meteo.com/v1/forecast"
 GEOCODING_URL = "https://geocoding-api.open-meteo.com/v1/search"
 
@@ -7,16 +9,16 @@ class WeatherProviderError(Exception):
     pass
 
 
-def fetch_forecast(latitude: float, longitude: float) -> dict:
+def fetch_forecast(latitude: float, longitude: float, options: ForecastOptions) -> dict:
     params = {
+        "forecast_days": options.forecast_days,
+        "timezone": options.timezone,
+
         "latitude": latitude,
         "longitude": longitude,
-        "hourly": [
-            "temperature_2m",
-            "precipitation",
-            "windspeed_10m"
-        ],
-        "forecast_days": 1,
+        
+        "hourly": options.hourly,
+        "daily": options.daily
     }
 
     try:

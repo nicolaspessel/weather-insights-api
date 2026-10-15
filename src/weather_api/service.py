@@ -1,3 +1,5 @@
+from .models.schemas import Location
+
 def summarize_forecast(data: dict) -> dict:
     '''
     Summarizes the received data from forecast.
@@ -20,30 +22,17 @@ def summarize_forecast(data: dict) -> dict:
     }
 
 
-def retrieve_coordinates(data: dict) -> tuple:
-    '''
-    Retrieves latitude and longitude from a geocoding dictionary.
-    '''
-
-    geo_params = data["results"][0]
-
-    return (
-        geo_params["latitude"],
-        geo_params["longitude"],
-    )
-
-
-def parse_location(data: dict) -> dict:
+def parse_location(data: dict) -> Location:
     '''
     Parses the location from the received data from geocoding.
     '''
 
     geo_params = data["results"][0]
 
-    return {
-        "name": geo_params["name"],
-        "country": geo_params["country"],
-        "latitude": geo_params["latitude"],
-        "longitude": geo_params["longitude"],
-        "timezone": geo_params["timezone"], 
-    }
+    return Location(
+        name=geo_params["name"],
+        country=geo_params["country"],
+        latitude=geo_params["latitude"],
+        longitude=geo_params["longitude"],
+        timezone=geo_params["timezone"], 
+    )

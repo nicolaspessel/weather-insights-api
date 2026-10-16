@@ -1,9 +1,11 @@
 from fastapi import FastAPI, HTTPException, Query
 from typing import Annotated
 
-from .models.schemas import (
+from .models.location import (
     Location, 
-    LocationQuery, 
+    LocationQuery
+)
+from .models.forecast import (
     ForecastQuery,
     ForecastLocation
 )

@@ -1,6 +1,6 @@
 import requests
 
-from .models.schemas import ForecastOptions
+from .models.forecast import ForecastOptions
 
 FORECAST_URL = "https://api.open-meteo.com/v1/forecast"
 GEOCODING_URL = "https://geocoding-api.open-meteo.com/v1/search"

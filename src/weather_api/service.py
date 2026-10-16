@@ -1,4 +1,4 @@
-from .models.schemas import Location
+from .models.location import Location
 
 def summarize_forecast(data: dict) -> dict:
     '''
